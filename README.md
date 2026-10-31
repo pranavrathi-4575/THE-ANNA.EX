@@ -1,6 +1,6 @@
 # THE ANNA.EX — India's Flavour Exchange
 
-A stock-market-inspired restaurant ordering prototype. Dish prices respond to recent demand, bringing exchange-style price movement into a restaurant menu.
+A stock-market-inspired, single-restaurant ordering prototype. Dish prices respond to recent demand within a configured 90%–110% band around each dish’s base price.
 
 ## Live prototype
 
@@ -9,8 +9,8 @@ https://pranavrathi-4575.github.io/THE-ANNA.EX/
 ## Current features
 
 - Customer sign-up and sign-in through Supabase Auth using email and password.
-- Shared market feed for the restaurant's listed dishes.
-- Demand-based dish pricing calculated by the backend over a rolling 30-minute window.
+- Shared market feed for the restaurant's listed dishes, currently seeded with 11 sample listings.
+- Demand-based dish pricing calculated by the backend over a rolling 30-minute window, with a 90%–110% base-price band.
 - Menu search, category filters, basket and demo-order checkout.
 - Order history for the signed-in customer.
 - Merchant sign-in with restaurant-membership checks.
@@ -25,7 +25,7 @@ https://pranavrathi-4575.github.io/THE-ANNA.EX/
 - No home-delivery service is currently provided.
 - Checkout creates an unpaid demo order. No payment gateway or payment collection is connected.
 - Phone-number OTP verification is not currently implemented. Customer accounts use email-based authentication.
-- The website is a pilot prototype, not yet a live commercial ordering service.
+- The website is a demonstration prototype, not yet a live commercial ordering service.
 
 ## Technology
 
@@ -34,6 +34,13 @@ https://pranavrathi-4575.github.io/THE-ANNA.EX/
 - Hosting: GitHub Pages.
 
 The browser uses a Supabase publishable key. Never put a Supabase service-role key, database password or other secret in frontend code or commit it to this repository.
+
+## Known prototype limitations
+
+- The market chart is illustrative, not a historical price chart.
+- Demo checkout creates unpaid test records; order-status changes are simulations and do not trigger kitchen preparation or pickup.
+- Current menu entries are sample data and must be replaced or approved by a participating restaurant before any pilot.
+- Public-facing counts are populated from the connected restaurant menu after the market feed loads.
 
 ## Before accepting real customer orders
 
