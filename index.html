@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0d10">
+  <meta name="description" content="THE ANNA.EX — India's food exchange. Track the market, discover dishes and place demo orders.">
+  <title>THE ANNA.EX — India's Food Exchange</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="#" data-page="market"><span class="brand-mark">A.</span><span>THE ANNA<span class="gold">.EX</span><small>INDIA'S FOOD EXCHANGE</small></span></a>
+  <nav><button class="nav-link active" data-page="market">Market</button><button class="nav-link" data-page="shop">Trade food</button><button class="nav-link" data-page="account">My account</button><button class="nav-link" data-page="owner">Restaurant</button></nav>
+  <div class="market-status"><i></i> MARKET LIVE <span id="clock">--:--:--</span></div>
+</header>
+<main>
+<section id="market" class="page active">
+  <div class="hero"><div><p class="eyebrow">THE FOOD MARKET · INDIA</p><h1>Where food meets<br><span class="gold">market movement.</span></h1><p class="muted hero-copy">A new way to experience your favourite dishes. Demand moves the price. You decide when to trade.</p><button class="primary" data-page="shop">Explore the market <span>↗</span></button></div><div class="hero-note"><span class="eyebrow">MARKET PRINCIPLE 001</span><strong>Demand drives<br>the menu.</strong><p>Prices respond to units sold in the last 30 minutes, within a transparent range.</p></div></div>
+  <div class="stats-grid"><article class="stat"><span>ANNA MARKET INDEX</span><strong id="indexValue">+0.00%</strong><small>Average movement across listed dishes</small></article><article class="stat"><span>LISTED DISHES</span><strong id="listedCount">10</strong><small>Live market instruments</small></article><article class="stat"><span>UNITS TRADED</span><strong id="unitsTraded">0</strong><small>Recorded in the last 30 minutes</small></article><article class="stat"><span>MARKET WINDOW</span><strong>30 MIN</strong><small>Rolling demand calculation</small></article></div>
+  <div class="section-head"><div><p class="eyebrow">LIVE MARKET</p><h2>Food assets</h2></div><span class="subtle">Prices in INR · Demo market</span></div>
+  <div class="table-wrap"><table><thead><tr><th>SYMBOL / DISH</th><th>BASE PRICE</th><th>MARKET PRICE</th><th>CHANGE</th><th>30M UNITS</th><th></th></tr></thead><tbody id="marketRows"></tbody></table></div>
+  <div class="two-col"><div><div class="section-head compact"><div><p class="eyebrow">PRICE ACTION</p><h2>Market movers</h2></div></div><div class="movers"><div><h3>Top gainers</h3><div id="gainers"></div></div><div><h3>Top decliners</h3><div id="losers"></div></div></div></div><div class="market-explainer"><p class="eyebrow">HOW IT WORKS</p><h2>A market, not a mystery.</h2><p>Each dish has a base price. The market price adjusts according to the number of units sold in the previous 30 minutes.</p><ul><li>Low demand can reduce the price by 2%.</li><li>Higher demand can increase it by up to 8%.</li><li>Market price is capped at 110% of base price.</li><li>Your checkout price is locked into the order.</li></ul><p class="tiny">This is a demonstration of a pricing concept, not a live financial market.</p></div></div>
+  <div class="section-head compact"><div><p class="eyebrow">RECENT ACTIVITY</p><h2>Trade tape</h2></div></div><div id="activity" class="activity"><p class="muted">No trades yet. Be the first to place an order.</p></div>
+</section>
+<section id="shop" class="page">
+  <div class="section-head"><div><p class="eyebrow">ANNA.EX MARKETPLACE</p><h1 class="page-title">Choose your trade.</h1><p class="muted">Prices update with demand. The price shown at checkout is the price you pay.</p></div><div class="cart-pill">CART <b id="cartCount">0</b></div></div>
+  <div class="shop-tools"><input id="search" type="search" placeholder="Search dishes..."><div id="filters" class="filters"><button class="filter active" data-filter="All">All</button><button class="filter" data-filter="Meals">Meals</button><button class="filter" data-filter="Snacks">Snacks</button><button class="filter" data-filter="Desserts">Desserts</button></div></div>
+  <div class="shop-layout"><div id="menuGrid" class="menu-grid"></div><aside class="cart-panel"><div class="cart-heading"><h2>Your basket</h2><span class="eyebrow">ORDER TICKET</span></div><div id="cartItems"><p class="muted">Your basket is empty.</p></div><div class="cart-total"><span>ESTIMATED TOTAL</span><strong id="cartTotal">₹0</strong></div><p class="tiny">Prices are locked when you place your demo order.</p><button id="checkout" class="primary full" disabled>Place demo order</button><p id="checkoutMessage" class="tiny"></p></aside></div>
+</section>
+<section id="account" class="page">
+ <div class="section-head"><div><p class="eyebrow">CUSTOMER TERMINAL</p><h1 class="page-title">Your account.</h1><p class="muted">Enter your details to view orders on this browser.</p></div></div>
+ <div class="login-card"><label>Your name<input id="customerName" placeholder="Name"></label><label>Email address<input id="customerEmail" type="email" placeholder="you@example.com"></label><button id="customerLogin" class="primary">Continue</button><p id="customerMessage" class="tiny"></p></div>
+ <div class="section-head compact"><div><p class="eyebrow">ORDER HISTORY</p><h2>Your trades</h2></div></div><div id="customerOrders" class="orders-list"><p class="muted">Sign in to view your orders.</p></div>
+</section>
+<section id="owner" class="page">
+ <div class="section-head"><div><p class="eyebrow">MERCHANT TERMINAL</p><h1 class="page-title">Restaurant desk.</h1><p class="muted">Demo dashboard for the restaurant team.</p></div></div>
+ <div id="ownerLoginPanel" class="login-card"><p class="eyebrow">OWNER ACCESS</p><label>Email<input id="ownerEmail" type="email" value="owner@anna.ex"></label><label>Password<input id="ownerPassword" type="password" placeholder="Demo password"></label><button id="ownerLogin" class="primary">Open dashboard</button><p class="tiny">Demo credentials: owner@anna.ex / anna123</p><p id="ownerMessage" class="tiny"></p></div>
+ <div id="ownerDashboard" hidden><div class="stats-grid"><article class="stat"><span>ORDERS</span><strong id="ownerOrders">0</strong></article><article class="stat"><span>DEMO REVENUE</span><strong id="ownerRevenue">₹0</strong></article><article class="stat"><span>UNITS SOLD</span><strong id="ownerUnits">0</strong></article></div><div class="section-head compact"><div><p class="eyebrow">OPERATIONS</p><h2>Incoming orders</h2></div><button id="ownerLogout" class="ghost">Log out</button></div><div id="ownerOrderList" class="orders-list"></div></div>
+</section>
+</main>
+<footer><span>THE ANNA<span class="gold">.EX</span></span><span>DEMAND-LED FOOD MARKET · PROTOTYPE 01</span><span>Built to rethink the menu.</span></footer>
+<script src="script.js"></script>
+</body></html>
