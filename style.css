@@ -58,3 +58,5 @@ footer{border-top:1px solid var(--line);padding:24px max(5.5%,calc((100vw - 1440
 .dish-admin-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
 .dish-admin-actions button{font-size:9px}
 @media(max-width:600px){.dish-manager-form{grid-template-columns:1fr;padding:14px}.dish-manager-form [role=status]{grid-column:auto}.dish-admin-card{grid-template-columns:1fr;gap:12px}.dish-admin-actions{justify-content:flex-start}.dish-admin-actions button{flex:1}}
+
+.availability-label{display:inline-block;margin:5px 0 0 8px;font:8px var(--mono);letter-spacing:.6px}.unavailable-label{color:var(--red)}.unavailable-notice{display:flex;align-items:center;justify-content:center;padding:10px 14px;border:1px solid #75433d;background:#241715;color:#e2a097;font:9px var(--mono);letter-spacing:.5px}.trade-btn:disabled,.add-btn:disabled{opacity:.55;cursor:not-allowed}
