@@ -27,7 +27,21 @@ el("marketRows").innerHTML=rows.map(({d,units,pct,price})=>`<tr><td><span class=
 const sorted=[...rows].sort((a,b)=>b.pct-a.pct);el("gainers").innerHTML=sorted.slice(0,3).map(mover).join("");el("losers").innerHTML=sorted.slice(-3).reverse().map(mover).join("");
 el("activity").innerHTML=db.activity.length?db.activity.slice(0,4).map(a=>`<div class="activity-row"><span><b>${a.name}</b> · ${a.qty} unit(s)</span><span class="muted">${a.price} · ${new Date(a.time).toLocaleTimeString()}</span></div>`).join(""):'<p class="muted tiny">No trades yet. The first order starts the tape.</p>'}
 function mover(x){return `<div class="mover"><span>${x.d.name}</span><b class="change ${x.pct>0?"up":x.pct<0?"down":""}">${x.pct>0?"+":""}${x.pct}%</b></div>`}
-function renderMenu(){const q=el("search").value.trim().toLowerCase(),list=dishes.filter(d=>(filter==="All"||d.category===filter)&&d.name.toLowerCase().includes(q));el("menuCount").textContent=list.length+" "+(list.length===1?"dish":"dishes");el("menuGrid").innerHTML=list.map(d=>{const x=quote(d);return `<article class="menu-card"><div class="menu-image"><img src="${d.image}" alt="${d.name}" loading="lazy" onerror="this.style.display='none'"><span class="menu-category">${d.category.toUpperCase()}</span></div><div class="menu-body"><div class="menu-top"><span class="symbol">${d.symbol}</span><span class="tiny">${x.units} TRADED / 30M</span></div><h3>${d.name}</h3><p>${d.desc}</p><div class="menu-bottom"><div><div class="menu-price">${money(x.price)}</div><span class="menu-base">Base ${money(d.base)} · ${x.pct>0?"+":""}${x.pct}%</span></div><button class="add-btn" data-buy="${d.symbol}">＋ Add</button></div></div></article>`}).join("")||'<p class="muted">No dishes match your search.</p>'}
+function renderMenu(){
+ const q=el("search").value.trim().toLowerCase();
+ const list=dishes.filter(d=>(filter==="All"||d.category===filter)&&d.name.toLowerCase().includes(q));
+ el("menuCount").textContent=list.length+" "+(list.length===1?"listing":"listings");
+ el("menuGrid").innerHTML=list.map(d=>{
+  const x=quote(d);
+  return `<article class="listing-row">
+   <div class="listing-identity"><span class="symbol">${d.symbol}</span><div><h3>${d.name}</h3><small>${d.category.toUpperCase()} · ANNA/${d.symbol}</small></div></div>
+   <div class="listing-demand"><span>30M VOLUME</span><strong>${x.units} <small>UNITS</small></strong></div>
+   <div class="listing-price"><span>MARKET PRICE</span><strong>${money(x.price)}</strong><small>BASE ${money(d.base)}</small></div>
+   <div class="listing-move"><span class="change ${x.pct>0?"up":x.pct<0?"down":"flat"}">${x.pct>0?"+":""}${x.pct.toFixed(0)}%</span><small>${x.pct>0?"UP":x.pct<0?"DOWN":"UNCHANGED"}</small></div>
+   <button class="add-btn" data-buy="${d.symbol}">＋ Add to basket</button>
+  </article>`;
+ }).join("")||'<p class="muted empty-list">No listings match your search.</p>';
+}
 function add(symbol,delta=1){cart[symbol]=(cart[symbol]||0)+delta;if(cart[symbol]<=0)delete cart[symbol];renderCart()}
 function renderCart(){const entries=Object.entries(cart);el("cartCount").textContent=entries.reduce((s,[,q])=>s+q,0);let total=0;el("cartItems").innerHTML=entries.length?entries.map(([sym,q])=>{const d=dishes.find(x=>x.symbol===sym),p=quote(d).price;total+=p*q;return `<div class="cart-row"><span>${d.name}<small>${money(p)} each</small></span><span class="qty"><button data-qty="${sym}" data-delta="-1" aria-label="Remove one ${d.name}">−</button>${q}<button data-qty="${sym}" data-delta="1" aria-label="Add one ${d.name}">＋</button></span></div>`}).join(""):'<div class="empty-cart"><span>＋</span><p>Your basket is waiting.</p><small>Add a dish to get started.</small></div>';el("cartTotal").textContent=money(total);el("checkout").disabled=!entries.length}
 document.addEventListener("click",e=>{const buy=e.target.closest("[data-buy]");if(buy){add(buy.dataset.buy);nav("shop")}const qty=e.target.closest("[data-qty]");if(qty)add(qty.dataset.qty,Number(qty.dataset.delta))});
