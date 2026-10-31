@@ -1,14 +1,14 @@
 const dishes=[
-{symbol:"A",name:"Classic Burger",category:"Snacks",base:100,desc:"Grilled patty, crisp lettuce and house sauce.",image:"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=700&q=80"},
-{symbol:"B",name:"Margherita Pizza",category:"Meals",base:180,desc:"Tomato, mozzarella and fresh basil.",image:"https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=700&q=80"},
-{symbol:"C",name:"Masala Dosa",category:"Meals",base:90,desc:"Crisp dosa with a spiced potato centre.",image:"https://images.unsplash.com/photo-1668236543090-82eba5ee5976?auto=format&fit=crop&w=700&q=80"},
-{symbol:"D",name:"Paneer Tikka",category:"Snacks",base:150,desc:"Tandoor-style paneer with Indian spices.",image:"https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?auto=format&fit=crop&w=700&q=80"},
-{symbol:"E",name:"Veg Biryani",category:"Meals",base:140,desc:"Fragrant rice with seasonal vegetables.",image:"https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=700&q=80"},
-{symbol:"F",name:"White Sauce Pasta",category:"Meals",base:160,desc:"Creamy pasta finished with herbs.",image:"https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=700&q=80"},
-{symbol:"G",name:"French Fries",category:"Snacks",base:80,desc:"Golden, crisp and lightly seasoned.",image:"https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=700&q=80"},
-{symbol:"H",name:"Chocolate Brownie",category:"Desserts",base:110,desc:"A rich chocolate treat, baked fresh.",image:"https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=700&q=80"},
-{symbol:"I",name:"Veg Sandwich",category:"Snacks",base:100,desc:"Toasted bread with fresh vegetables.",image:"https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=700&q=80"},
-{symbol:"J",name:"Chole Bhature",category:"Meals",base:120,desc:"Spiced chickpeas with fluffy bhature.",image:"https://images.unsplash.com/photo-1626132647523-66f5bf380027?auto=format&fit=crop&w=700&q=80"}
+{symbol:"A",name:"Classic Burger",category:"Snacks",base:100,desc:"Grilled patty, crisp lettuce and house sauce."},
+{symbol:"B",name:"Margherita Pizza",category:"Meals",base:180,desc:"Tomato, mozzarella and fresh basil."},
+{symbol:"C",name:"Masala Dosa",category:"Meals",base:90,desc:"Crisp dosa with a spiced potato centre."},
+{symbol:"D",name:"Paneer Tikka",category:"Snacks",base:150,desc:"Tandoor-style paneer with Indian spices."},
+{symbol:"E",name:"Veg Biryani",category:"Meals",base:140,desc:"Fragrant rice with seasonal vegetables."},
+{symbol:"F",name:"White Sauce Pasta",category:"Meals",base:160,desc:"Creamy pasta finished with herbs."},
+{symbol:"G",name:"French Fries",category:"Snacks",base:80,desc:"Golden, crisp and lightly seasoned."},
+{symbol:"H",name:"Chocolate Brownie",category:"Desserts",base:110,desc:"A rich chocolate treat, baked fresh."},
+{symbol:"I",name:"Veg Sandwich",category:"Snacks",base:100,desc:"Toasted bread with fresh vegetables."},
+{symbol:"J",name:"Chole Bhature",category:"Meals",base:120,desc:"Spiced chickpeas with fluffy bhature."}
 ];
 const KEY="anna_ex_v4",AUTH_KEY="anna_ex_auth_v1";
 const SUPABASE_URL="YOUR_SUPABASE_PROJECT_URL";
@@ -22,7 +22,7 @@ function rate(units){if(units<=1)return -2;if(units<=3)return 0;if(units<=5)retu
 function quote(d){const units=demand(d),pct=rate(units);return {units,pct,price:Math.min(d.base*1.1,d.base*(1+pct/100))}}
 function nav(page){document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id===page));document.querySelectorAll("[data-page].nav-link").forEach(b=>b.classList.toggle("active",b.dataset.page===page));if(page==="owner")renderOwner();window.scrollTo({top:0,behavior:"smooth"})}
 document.addEventListener("click",e=>{const b=e.target.closest("[data-page]");if(b){e.preventDefault();nav(b.dataset.page)}});
-function renderMarket(){const rows=dishes.map(d=>({d,...quote(d)})),avg=rows.reduce((s,x)=>s+x.pct,0)/rows.length;el("indexValue").textContent=(avg>0?"+":"")+avg.toFixed(2)+"%";el("indexValue").className=avg>=0?"change up":"change down";el("listedCount").textContent=dishes.length;el("unitsTraded").textContent=rows.reduce((s,x)=>s+x.units,0);
+function renderMarket(){const rows=dishes.map(d=>({d,...quote(d)})),avg=rows.reduce((s,x)=>s+x.pct,0)/rows.length;el("indexValue").textContent=(avg>0?"+":"")+avg.toFixed(2)+"%";el("indexValue").classList.toggle("up",avg>=0);el("indexValue").classList.toggle("down",avg<0);el("listedCount").textContent=dishes.length;el("unitsTraded").textContent=rows.reduce((s,x)=>s+x.units,0);
 el("marketRows").innerHTML=rows.map(({d,units,pct,price})=>`<tr><td><span class="symbol">${d.symbol}</span><span class="dish-name">${d.name}</span></td><td class="price">${money(d.base)}</td><td class="price">${money(price)}</td><td class="change ${pct>0?"up":pct<0?"down":""}">${pct>0?"+":""}${pct}%</td><td>${units}</td><td><button class="trade-btn" data-buy="${d.symbol}">View dish ↗</button></td></tr>`).join("");
 const sorted=[...rows].sort((a,b)=>b.pct-a.pct);el("gainers").innerHTML=sorted.slice(0,3).map(mover).join("");el("losers").innerHTML=sorted.slice(-3).reverse().map(mover).join("");
 el("activity").innerHTML=db.activity.length?db.activity.slice(0,4).map(a=>`<div class="activity-row"><span><b>${a.name}</b> · ${a.qty} unit(s)</span><span class="muted">${a.price} · ${new Date(a.time).toLocaleTimeString()}</span></div>`).join(""):'<p class="muted tiny">No trades yet. The first order starts the tape.</p>'}
