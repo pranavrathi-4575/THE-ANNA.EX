@@ -26,3 +26,9 @@ footer{border-top:1px solid var(--line);padding:24px max(5.5%,calc((100vw - 1440
 .brand-logo{width:178px;height:62px}
 .brand-logo img{object-fit:contain;max-width:100%;max-height:100%}
 @media(max-width:640px){.brand-logo{width:142px;height:54px}}
+
+/* Merchant order status controls */
+.order-status-control{display:grid;grid-template-columns:1fr;gap:8px;margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.order-status-control label{display:block!important;font:700 9px var(--mono);letter-spacing:1.2px;color:var(--gold)}
+.order-status-control .status-select{display:block;width:100%;min-height:42px;margin:0;padding:10px 12px;border:1px solid var(--gold);border-radius:3px;background:#111a15;color:var(--text);font:600 12px var(--mono);appearance:auto;opacity:1;visibility:visible}
+.order-status-control [data-status-message]{min-height:12px;margin:0;color:var(--muted)}
